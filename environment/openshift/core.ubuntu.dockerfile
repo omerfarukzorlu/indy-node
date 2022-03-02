@@ -26,6 +26,9 @@ ENV HOME=/home/indy
 ENV TEST_MODE=
 ENV HOLD_EXT="indy "
 
+RUN echo $ips
+RUN echo $nodename
+
 EXPOSE $nport $cport
 
 COPY ./validator.sh /home/indy/
