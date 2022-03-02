@@ -21,4 +21,4 @@ RUN chown -R indy:root /home/indy && \
 
 USER 10001
 WORKDIR /home/indy
-CMD ["/home/indy/start.sh"]
+CMD ["echo 'Hello World'"]
