@@ -4,26 +4,37 @@ FROM indybase
 ARG uid=1000
 ARG gid=0
 
-# Install environment
-RUN apt-get update -y && apt-get install -y \ 
-	git \
-	wget \
-	python3.5 \
-	python3-pip \
-	python-setuptools \
-	python3-nacl \
-	apt-transport-https \
-	ca-certificates
+# Development
+FROM indycore
 
-RUN pip3 install -U \ 
-	'pip<10.0.0' \
-	setuptools
+ARG nodename
+ARG nport
+ARG cport
+ARG ips
+ARG nodenum
+ARG nodecnt
+ARG clicnt=10
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BD33704C
+ENV NODE_NUMBER $nodenum
+ENV NODE_NAME $nodename
+ENV NODE_PORT $nport
+ENV CLIENT_PORT $cport
+ENV NODE_IP_LIST $ips
+ENV NODE_COUNT $nodecnt
+ENV CLIENT_COUNT $clicnt
+ENV HOME=/home/indy
+ENV TEST_MODE=
+ENV HOLD_EXT="indy "
 
-RUN echo "deb https://repo.evernym.com/deb xenial stable" >> /etc/apt/sources.list
-RUN echo "deb https://repo.sovrin.org/deb xenial stable" >> /etc/apt/sources.list
+EXPOSE $nport $cport
 
-RUN useradd -ms /bin/bash -l -u $uid -G $gid indy
-RUN apt-get update -y && apt-get install -y indy-node
+COPY ./validator.sh /home/indy/
+
+RUN chown -R indy:root /home/indy && \
+	chgrp -R 0 /home/indy && \
+	chmod -R g+rwX /home/indy && \
+	chmod +x /home/indy/*.sh
+
+USER 10001
+WORKDIR /home/indy
+CMD ["/home/indy/validator.sh"]
