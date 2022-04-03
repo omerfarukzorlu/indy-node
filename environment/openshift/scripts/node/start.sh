@@ -28,16 +28,16 @@ echo ${CLIENT_PORT}
 echo "${NEW_NODE_IP_LIST}"
 
 # if less than one argument is supplied, display usage
-if [  $# -ne 4 ]
-then
-    display_usage
-    exit 1
-fi
+#if [  $# -ne 4 ]
+#then
+#    display_usage
+#    exit 1
+#fi
 
 
-HOSTNAME=$1
-NODEIP=$2
-NODEPORT=$3
+HOSTNAME=${NODE_NAME} 
+NODEIP=${NODE_PORT}
+NODEPORT=${CLIENT_PORT}
 CLIENTIP=$4
 CLIENTPORT=$5
 TIMEZONE=$6
@@ -94,7 +94,7 @@ fi
 chown indy:indy /etc/indy/indy_config.py
 echo "Setting Up Indy Node Number $NODENUM"
 su - indy -c "init_indy_node $HOSTNAME $NODEIP $NODEPORT $CLIENTIP $CLIENTPORT"  # set up /etc/indy/indy.env
-su - indy -c "generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips '10.20.30.201,10.20.30.202,10.20.30.203,10.20.30.204'"
+su - indy -c "generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips ${NEW_NODE_IP_LIST}"
 systemctl start indy-node
 systemctl enable indy-node
 systemctl status indy-node.service
