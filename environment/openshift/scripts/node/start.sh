@@ -45,8 +45,7 @@ echo
 NODENUM=${BASH_REMATCH[1]}
 IFS=', ' read -r -a node_ip <<< "${NODE_IP_LIST}"
 echo "Setting Up Indy Node Number $NODENUM"
-echo ${node_ip[$NODENUM-1]}
-exec init_indy_node ${NODE_NAME}  ${NODE_PORT} ${CLIENT_PORT}
+exec init_indy_node ${NODE_NAME} ${node_ip[$NODENUM-1]} ${NODE_PORT} ${CLIENT_PORT}
 exec generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips ${NODE_IP_LIST}
 
 #echo "Starting indy-node service ..."
