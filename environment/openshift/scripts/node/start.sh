@@ -25,7 +25,7 @@ echo ${NODE_PORT}
 
 echo ${CLIENT_PORT}
 
-echo "${NEW_NODE_IP_LIST}"
+echo "${NODE_IP_LIST}"
 
 # if less than one argument is supplied, display usage
 #if [  $# -ne 4 ]
@@ -46,9 +46,9 @@ IPLIST=$7
 
 #--------------------------------------------------------
 echo 'Setting Up Networking'
-cp /vagrant/etc/hosts /etc/hosts
-perl -p -i -e 's/(PasswordAuthentication\s+)no/$1yes/' /etc/ssh/sshd_config
-service sshd restart
+echo /etc/hosts
+#perl -p -i -e 's/(PasswordAuthentication\s+)no/$1yes/' /etc/ssh/sshd_config
+#service sshd restart
 
 #--------------------------------------------------------
 echo 'Setting up timezone'
@@ -56,11 +56,11 @@ cp $TIMEZONE /etc/localtime
 
 #--------------------------------------------------------
 echo "Installing Required Packages"
-apt-get update
-apt-get install -y software-properties-common python-software-properties
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
-apt-get update
+su apt-get update
+su apt-get install -y software-properties-common python-software-properties
+su apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
+su add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
+su apt-get update
 #DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 DEBIAN_FRONTEND=noninteractive apt-get install -y unzip make screen indy-node tmux vim wget
 
@@ -94,7 +94,7 @@ fi
 chown indy:indy /etc/indy/indy_config.py
 echo "Setting Up Indy Node Number $NODENUM"
 su - indy -c "init_indy_node $HOSTNAME $NODEIP $NODEPORT $CLIENTIP $CLIENTPORT"  # set up /etc/indy/indy.env
-su - indy -c "generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips ${NEW_NODE_IP_LIST}"
+su - indy -c "generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips ${NODE_IP_LIST}"
 systemctl start indy-node
 systemctl enable indy-node
 systemctl status indy-node.service
