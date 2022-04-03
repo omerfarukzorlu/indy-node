@@ -17,14 +17,14 @@ ARG gid=0
 #	'pip<10.0.0' \
 #	setuptools
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
+RUN add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
+
 RUN apt-get update
 RUN apt-get install -y \
 	software-properties-common \
 	python-software-properties
-
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-RUN add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
-RUN apt-get update 
+	
 RUN apt-get install -y unzip make screen indy-node tmux vim wget 
 	
 RUN useradd -ms /bin/bash -l -u $uid indy
