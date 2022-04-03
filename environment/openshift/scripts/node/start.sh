@@ -47,11 +47,11 @@ IPLIST=$7
 [[ $HOSTNAME =~ [^0-9]*([0-9]*) ]]
 NODENUM=${BASH_REMATCH[1]}
 echo "Setting Up Indy Node Number $NODENUM"
-su - indy -c "init_indy_node $HOSTNAME $NODEIP $NODEPORT $CLIENTIP $CLIENTPORT"  # set up /etc/indy/indy.env	
-su - indy -c "generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips $IPLIST"
-systemctl start indy-node
-systemctl enable indy-node
-systemctl status indy-node.service
+exec su - indy -c "init_indy_node $HOSTNAME $NODEIP $NODEPORT $CLIENTIP $CLIENTPORT"  # set up /etc/indy/indy.env	
+exec su - indy -c "generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips $IPLIST"
+exec systemctl start indy-node
+exec systemctl enable indy-node
+exec systemctl status indy-node.service
 
 #--------------------------------------------------------
 echo 'Fixing Bugs'
