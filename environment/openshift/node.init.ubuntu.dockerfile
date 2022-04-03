@@ -38,9 +38,9 @@ RUN chown -R indy:root /home/indy && \
 	chmod -R g+rwX /home/indy && \
 	chmod +x /home/indy/*.sh
 
-USER 10001
+USER root
 WORKDIR /home/indy
-CMD ["/home/indy/start.sh"]
+CMD ["/bin/bash", "-c", "exec /home/indy/start.sh"]
 
 # Init indy-node
 #RUN init_indy_node $nodename $nip $nport $cip $cport
