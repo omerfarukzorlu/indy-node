@@ -38,7 +38,7 @@ RUN chown -R indy:root /home/indy && \
 	chmod -R g+rwX /home/indy && \
 	chmod +x /home/indy/*.sh
 
-USER root
+USER 10001
 WORKDIR /home/indy
 CMD ["/home/indy/start.sh"]
 
