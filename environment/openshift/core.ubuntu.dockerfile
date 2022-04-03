@@ -16,17 +16,13 @@ ARG gid=0
 #RUN pip3 install -U \ 
 #	'pip<10.0.0' \
 #	setuptools
-
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-RUN add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
-
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update -y && apt-get install -y \ 
 	software-properties-common \
 	python-software-properties
-	
-RUN apt-get install -y unzip make screen indy-node tmux vim wget 
-	
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BD33704C
+RUN add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
 RUN useradd -ms /bin/bash -l -u $uid indy
+RUN apt-get install -y unzip make screen indy-node tmux vim wget 
 USER indy
 WORKDIR /home/indy
