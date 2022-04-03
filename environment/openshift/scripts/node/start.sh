@@ -13,17 +13,17 @@ echo
 # sleep 10
 
 
+
 display_usage() {
 	echo -e "Usage:\t$0 <NODENAME> <NODEIP> <NODEPORT> <CLIENTIP> <CLIENTPORT> <TIMEZONE>"
 	echo -e "EXAMPLE: $0 Node1 0.0.0.0 9701 0.0.0.0 9702 /usr/share/zoneinfo/America/Denver"
 }
 
-SCRIPT_DIR=$(dirname $0)
+echo ${NODE_NAME} 
 
-$SCRIPT_DIR/initialize.sh
+echo ${NODE_PORT} 
 
-echo "Starting indy node ..."
-echo
+echo ${CLIENT_PORT}
 
 # if less than one argument is supplied, display usage
 if [  $# -ne 4 ]
@@ -31,6 +31,7 @@ then
     display_usage
     exit 1
 fi
+
 
 HOSTNAME=$1
 NODEIP=$2
