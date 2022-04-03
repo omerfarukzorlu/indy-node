@@ -1,4 +1,3 @@
-# Development
 FROM indycore
 
 ARG nodename
@@ -8,6 +7,8 @@ ARG ips
 ARG nodenum
 ARG nodecnt
 ARG clicnt=10
+
+CMD ["/home/indy/start.sh"]
 
 ENV NODE_NUMBER $nodenum
 ENV NODE_NAME $nodename
@@ -35,4 +36,3 @@ RUN if [ ! -z "$ips" ] && [ ! -z "$nodenum" ] && [ ! -z "$nodecnt" ]; then gener
 USER root
 CMD ["/bin/bash", "-c", "exec /sbin/init --log-target=journal 3>&1"]
 
-CMD ["/home/indy/start.sh"]
