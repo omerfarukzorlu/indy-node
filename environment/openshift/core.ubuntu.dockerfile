@@ -18,7 +18,9 @@ ARG gid=0
 #	setuptools
 RUN apt-get update -y && apt-get install -y \ 
 	software-properties-common \
-	python-software-properties
+	python-software-properties \
+	apt-transport-https \
+	ca-certificates 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BD33704C
 RUN add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
