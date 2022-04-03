@@ -12,7 +12,7 @@ ENV HOME=/home/indy
 EXPOSE 5000-9799
 
 COPY ./scripts/common/*.sh /home/indy/
-COPY ./scripts/node/start.sh /home/indy/
+COPY ./scripts/client/start.sh /home/indy/
 
 RUN chown -R indy:root /home/indy && \
 	chgrp -R 0 /home/indy && \
@@ -21,4 +21,4 @@ RUN chown -R indy:root /home/indy && \
 
 USER 10001
 WORKDIR /home/indy
-CMD ["echo 'Hello World'"]
+CMD ["/home/indy/start.sh"]
