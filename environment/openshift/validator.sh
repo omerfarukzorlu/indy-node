@@ -5,6 +5,13 @@ display_usage() {
 	echo -e "EXAMPLE: $0 Node1 0.0.0.0 9701 0.0.0.0 9702 /usr/share/zoneinfo/America/Denver"
 }
 
+SCRIPT_DIR=$(dirname $0)
+
+$SCRIPT_DIR/initialize.sh
+
+echo "Starting indy node ..."
+echo
+
 # if less than one argument is supplied, display usage
 if [  $# -ne 4 ]
 then
