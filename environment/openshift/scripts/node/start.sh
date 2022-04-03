@@ -37,24 +37,16 @@ if [ ! -z "${NODE_SERVICE_HOST_PATTERN}" ]; then
   fi
 fi
 
+
 echo "Starting indy node ..."
 echo
 
-echo ${NODE_NAME} 
-echo ${NODE_PORT} 
-echo ${CLIENT_PORT}
-echo "${NODE_IP_LIST}"
-
-# echo "Starting indy-node-control service ..."
-# echo "/usr/bin/env python3 -O /usr/local/bin/start_node_control_tool.py ${TEST_MODE} --hold-ext ${HOLD_EXT}"
-# echo
-# exec /usr/bin/env python3 -O /usr/local/bin/start_node_control_tool.py ${TEST_MODE} --hold-ext ${HOLD_EXT} &
-# sleep 10
 [[ ${NODE_NAME} =~ [^0-9]*([0-9]*) ]]
 NODENUM=${BASH_REMATCH[1]}
+IFS=', ' read -r -a node_ip <<< "${NODE_IP_LIST}"
 echo "Setting Up Indy Node Number $NODENUM"
-
-exec init_indy_node ${NODE_NAME} ${NODE_PORT} ${CLIENT_PORT}
+echo ${node_ip[$NODENUM-1]}
+exec init_indy_node ${NODE_NAME}  ${NODE_PORT} ${CLIENT_PORT}
 exec generate_indy_pool_transactions --nodes 4 --clients 4 --nodeNum $NODENUM --ips ${NODE_IP_LIST}
 
 #echo "Starting indy-node service ..."
