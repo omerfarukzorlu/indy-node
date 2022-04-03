@@ -28,6 +28,11 @@ RUN echo " " >> /etc/indy/indy_config.py
 RUN echo "logLevel=0" >> /etc/indy/indy_config.py
 RUN echo " " >> /etc/indy/indy_config.py
 
+EXPOSE $nport $cport
+
+COPY ./scripts/common/*.sh /home/indy/
+COPY ./scripts/node/start.sh /home/indy/
+
 RUN chown -R indy:root /home/indy && \
 	chgrp -R 0 /home/indy && \
 	chmod -R g+rwX /home/indy && \
