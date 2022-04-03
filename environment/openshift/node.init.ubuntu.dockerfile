@@ -20,13 +20,10 @@ ENV HOME=/home/indy
 ENV TEST_MODE=
 ENV HOLD_EXT="indy "
 
-RUN echo $ips
-RUN echo $nodename
-
 EXPOSE $nport $cport
 
-COPY ./validator.sh /home/indy/
-COPY ./scripts/common/initialize.sh /home/indy/
+COPY ./scripts/common/*.sh /home/indy/
+COPY ./scripts/node/start.sh /home/indy/
 
 RUN chown -R indy:root /home/indy && \
 	chgrp -R 0 /home/indy && \
@@ -35,6 +32,4 @@ RUN chown -R indy:root /home/indy && \
 
 USER 10001
 WORKDIR /home/indy
-RUN echo $ips
-RUN echo $nodename
-CMD ["/home/indy/validator.sh"]
+CMD ["/home/indy/start.sh"]
