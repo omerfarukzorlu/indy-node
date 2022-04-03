@@ -25,6 +25,8 @@ echo ${NODE_PORT}
 
 echo ${CLIENT_PORT}
 
+echo "${NEW_NODE_IP_LIST}"
+
 # if less than one argument is supplied, display usage
 if [  $# -ne 4 ]
 then
