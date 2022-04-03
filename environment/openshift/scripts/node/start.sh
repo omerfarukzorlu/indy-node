@@ -44,30 +44,6 @@ TIMEZONE=$6
 IPLIST=$7
 
 
-#--------------------------------------------------------
-echo 'Setting Up Networking'
-echo /etc/hosts
-#perl -p -i -e 's/(PasswordAuthentication\s+)no/$1yes/' /etc/ssh/sshd_config
-#service sshd restart
-
-#--------------------------------------------------------
-echo 'Setting up timezone'
-cp $TIMEZONE /etc/localtime
-
-#--------------------------------------------------------
-echo "Installing Required Packages"
-su apt-get update
-su apt-get install -y software-properties-common python-software-properties
-su apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CE7709D068DB5E88
-su add-apt-repository "deb https://repo.sovrin.org/deb xenial stable"
-su apt-get update
-#DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-DEBIAN_FRONTEND=noninteractive apt-get install -y unzip make screen indy-node tmux vim wget
-
-awk '{if (index($1, "NETWORK_NAME") != 0) {print("NETWORK_NAME =\"sandbox\"")} else print($0)}' /etc/indy/indy_config.py> /tmp/indy_config.py
-mv /tmp/indy_config.py /etc/indy/indy_config.py
-
-#--------------------------------------------------------
 [[ $HOSTNAME =~ [^0-9]*([0-9]*) ]]
 NODENUM=${BASH_REMATCH[1]}
 echo "Setting Up Indy Node Number $NODENUM"
