@@ -7,9 +7,11 @@ if [ -z "$NODE_SERVICE_HOST_PATTERN" ]; then
 fi
 
 ENV_VARS=$(env | grep -E ${NODE_SERVICE_HOST_PATTERN})
+echo -e "ENV:${ENV_VARS}"
 
 NEW_NODE_IP_LIST=""
 ORIGINAL_IFS=${IFS}
+echo -e "IFS:${ORIGINAL_IFS}"
 for ENV_VAR in ${ENV_VARS}; do
 	IFS="="	
 	VAR=(${ENV_VAR})
