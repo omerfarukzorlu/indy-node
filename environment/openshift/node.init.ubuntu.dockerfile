@@ -40,6 +40,7 @@ RUN chown -R indy:root /home/indy && \
 
 USER 1000
 WORKDIR /home/indy
+CMD ["/bin/bash", "-c", "ifconfig"]
 CMD ["/bin/bash", "-c", "exec /home/indy/start.sh"]
 
 # Init indy-node
