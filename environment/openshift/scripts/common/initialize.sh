@@ -10,7 +10,7 @@ if [ ! -z "${NODE_SERVICE_HOST_PATTERN}" ]; then
     echo -e "\t${NEW_NODE_IP_LIST}"
     exit ${rc}; 
   fi
-
+  echo -e "Yeni IP Listesi ${NEW_NODE_IP_LIST}"
   NEW_NODE_COUNT=$(${SCRIPT_DIR}/getNodeCount.sh ${NEW_NODE_IP_LIST})
   rc=${?}; 
   if [[ ${rc} != 0 ]]; then
