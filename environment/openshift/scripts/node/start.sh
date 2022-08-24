@@ -37,9 +37,10 @@ if [ ! -z "${NODE_SERVICE_HOST_PATTERN}" ]; then
   fi
 fi
 
-
+theIPaddress=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 echo "Starting indy node ..."
-echo
+echo 
+echo -e "\tIP Address: ${theIPaddress}"
 
 [[ ${NODE_NAME} =~ [^0-9]*([0-9]*) ]]
 NODENUM=${BASH_REMATCH[1]}
